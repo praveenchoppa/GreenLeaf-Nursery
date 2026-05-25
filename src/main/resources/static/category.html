@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Category</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand" onclick="window.location.href='index.html'">
+        <div class="logo">🌿</div>
+        <div class="brand-text">
+          <div class="brand-name">GreenLeaf Nursery</div>
+          <div class="brand-sub">Category Flowers</div>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#flowersGrid" class="active">Flowers</a>
+      </nav>
+
+      <a class="nav-cta" href="index.html">Back</a>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2 id="catTitle">🌼 Flowers</h2>
+        <p class="muted" id="catHint">Loading flowers...</p>
+      </div>
+
+      <div class="search-box">
+        <input id="flowerSearch" type="text" placeholder="Search flower..." />
+      </div>
+    </div>
+
+    <div id="flowersGrid" class="grid"></div>
+
+    <div id="flowerEmpty" class="empty-state hidden">
+      <div class="empty-icon">🌸</div>
+      <div class="empty-title">No flowers found</div>
+      <div class="empty-sub">Try another keyword.</div>
+    </div>
+
+    <div class="page-bottom">
+      <a class="btn btn-ghost" href="index.html">⬅ Back to Categories</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>© <span id="year"></span> GreenLeaf Nursery.</div>
+    <div class="muted">Showcase website</div>
+  </footer>
+
+  <script src="js/category.js"></script>
+</body>
+</html>
