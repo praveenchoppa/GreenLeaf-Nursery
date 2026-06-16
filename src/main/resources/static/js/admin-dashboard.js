@@ -1,16 +1,16 @@
 function getToken() {
-  return localStorage.getItem("adminToken");
+  return localStorage.getItem("token");
 }
 
 function logout() {
-  localStorage.removeItem("adminToken");
-  window.location.href = "/admin/login.html";
+  localStorage.removeItem("token");
+  window.location.href = "/login.html";
 }
 
 function requireLogin() {
 
   if (!getToken()) {
-    window.location.href = "/admin/login.html";
+    window.location.href = "/login.html";
   }
 }
 
@@ -35,12 +35,12 @@ async function api(url, options = {}) {
     response.status === 403
   ) {
 
-    localStorage.removeItem("adminToken");
+    localStorage.removeItem("token");
 
     alert("Session expired. Please login again.");
 
     window.location.href =
-      "/admin/login.html";
+      "/login.html";
 
     return null;
   }
@@ -77,7 +77,9 @@ async function uploadFlowerImage() {
     return alert(err.message);
   }
 
-  const imageUrl = await res.text();
+const response = await res.json();
+
+const imageUrl = response.data;
 
   document.getElementById(
     "flowerImgUrl"
@@ -90,7 +92,9 @@ async function loadCategories() {
 
   const res = await fetch("/api/categories");
 
-  const cats = await res.json();
+const response = await res.json();
+
+const cats = response.data;
 
   const select =
     document.getElementById("flowerCategory");
@@ -142,7 +146,9 @@ async function loadFlowers() {
 
   const res = await fetch("/api/flowers");
 
-  const flowers = await res.json();
+  const response = await res.json();
+
+const flowers = response.data.content;
 
   const flowerList =
     document.getElementById("flowerList");

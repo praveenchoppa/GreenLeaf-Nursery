@@ -63,7 +63,9 @@ async function loadFlowers() {
 
   try {
     const res = await fetch(`/api/flowers?categoryId=${id}`);
-    flowers = await res.json();
+    const response = await res.json();
+
+    flowers = response.data.content;
 
     catHint.innerText = `Found ${flowers.length} flower(s) in ${name}`;
     renderFlowers(flowers);

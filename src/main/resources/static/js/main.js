@@ -39,7 +39,8 @@ function renderCategories(list) {
 async function loadCategories() {
   try {
     const res = await fetch("/api/categories");
-    categories = await res.json();
+    const response = await res.json();
+    categories = response.data;
     renderCategories(categories);
   } catch (e) {
     console.log("Error loading categories", e);

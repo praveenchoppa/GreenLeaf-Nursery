@@ -1,36 +1,80 @@
 package com.nursery.nursery.controller;
 
-import com.nursery.nursery.entity.Flower;
-import com.nursery.nursery.repository.FlowerRepository;
+import com.nursery.nursery.dto.FlowerResponse;
+import com.nursery.nursery.response.ApiResponse;
+import com.nursery.nursery.service.FlowerService;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/flowers")
 @CrossOrigin("*")
 public class FlowerController {
 
-    private final FlowerRepository flowerRepository;
+    private final FlowerService flowerService;
 
-    public FlowerController(FlowerRepository flowerRepository) {
-        this.flowerRepository = flowerRepository;
+    public FlowerController(
+            FlowerService flowerService
+    ) {
+        this.flowerService = flowerService;
     }
 
     @GetMapping
-    public List<Flower> getFlowers(@RequestParam(required = false) Long categoryId) {
+    public ResponseEntity<ApiResponse<Page<FlowerResponse>>>
+    getFlowers(
 
-        if (categoryId != null) {
-            return flowerRepository.findByCategoryId(categoryId);
-        }
+            @RequestParam(required = false)
+            Long categoryId,
 
-        return flowerRepository.findAll();
+            @RequestParam(defaultValue = "0")
+            int page,
+
+            @RequestParam(defaultValue = "10")
+            int size,
+
+            @RequestParam(defaultValue = "id")
+            String sortBy,
+
+            @RequestParam(defaultValue = "asc")
+            String direction
+    ) {
+
+        Page<FlowerResponse> flowers =
+                flowerService.getFlowers(
+                        categoryId,
+                        page,
+                        size,
+                        sortBy,
+                        direction
+                );
+
+        ApiResponse<Page<FlowerResponse>> response =
+                new ApiResponse<>(
+                        true,
+                        "Flowers fetched successfully",
+                        flowers
+                );
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public Flower getFlowerById(@PathVariable Long id) {
-        return flowerRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Flower not found with id: " + id)
-        );
+    public ResponseEntity<ApiResponse<FlowerResponse>>
+    getFlowerById(
+            @PathVariable Long id
+    ) {
+
+        FlowerResponse flower =
+                flowerService.getFlowerById(id);
+
+        ApiResponse<FlowerResponse> response =
+                new ApiResponse<>(
+                        true,
+                        "Flower fetched successfully",
+                        flower
+                );
+
+        return ResponseEntity.ok(response);
     }
 }

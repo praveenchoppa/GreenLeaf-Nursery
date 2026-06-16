@@ -1,7 +1,8 @@
 package com.nursery.nursery.controller;
 
-import com.nursery.nursery.entity.Category;
-import com.nursery.nursery.repository.CategoryRepository;
+import com.nursery.nursery.dto.CategoryResponse;
+import com.nursery.nursery.response.ApiResponse;
+import com.nursery.nursery.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,19 +12,22 @@ import java.util.List;
 @CrossOrigin("*")
 public class CategoryController {
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
 
-    public CategoryController(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public CategoryController(
+            CategoryService categoryService
+    ) {
+        this.categoryService = categoryService;
     }
 
     @GetMapping
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
+    public ApiResponse<List<CategoryResponse>>
+    getAllCategories() {
 
-    @PostMapping
-    public Category addCategory(@RequestBody Category category) {
-        return categoryRepository.save(category);
+        return new ApiResponse<>(
+                true,
+                "Categories fetched successfully",
+                categoryService.getAllCategories()
+        );
     }
 }

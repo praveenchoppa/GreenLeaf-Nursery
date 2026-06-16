@@ -55,6 +55,11 @@ public class SecurityConfig {
                                 "/category.html",
                                 "/flower.html",
 
+
+                                "/login.html",
+                                "/profile.html",
+                                "/register.html",
+                                
                                 "/css/**",
                                 "/js/**",
                                 "/images/**",
@@ -69,6 +74,9 @@ public class SecurityConfig {
 
                         .requestMatchers("/api/admin/**")
                         .hasRole("ADMIN")
+
+                        .requestMatchers("/api/users/**")
+                        .hasAnyRole("USER", "ADMIN")
 
                         .anyRequest()
                         .authenticated()

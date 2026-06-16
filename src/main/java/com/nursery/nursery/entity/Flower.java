@@ -25,7 +25,6 @@ public class Flower {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    // One image per flower (Cloudinary URL or stored path)
     @Column(name = "image_url", length = 1000)
     private String imageUrl;
 

@@ -2,12 +2,9 @@ package com.nursery.nursery.controller;
 
 import com.nursery.nursery.dto.LoginRequest;
 import com.nursery.nursery.dto.LoginResponse;
-import com.nursery.nursery.entity.Role;
-import com.nursery.nursery.entity.User;
-import com.nursery.nursery.repository.UserRepository;
-import com.nursery.nursery.security.JwtUtil;
+import com.nursery.nursery.dto.RegisterRequest;
+import com.nursery.nursery.service.AuthService;
 import jakarta.validation.Valid;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,38 +12,26 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class AuthController {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
+    private final AuthService authService;
 
     public AuthController(
-            UserRepository userRepository,
-            PasswordEncoder passwordEncoder,
-            JwtUtil jwtUtil
+            AuthService authService
     ) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
+        this.authService = authService;
     }
 
     @PostMapping("/create-admin")
     public String createAdmin() {
 
-        if (userRepository.findByUsername("admin").isPresent()) {
-            return "Admin already exists";
-        }
+        return authService.createAdmin();
+    }
 
-        User admin = new User();
+    @PostMapping("/register")
+    public String register(
+            @Valid @RequestBody RegisterRequest request
+    ) {
 
-        admin.setUsername("admin");
-
-        admin.setPassword(passwordEncoder.encode("admin123"));
-
-        admin.setRole(Role.ROLE_ADMIN);
-
-        userRepository.save(admin);
-
-        return "Admin created successfully";
+        return authService.register(request);
     }
 
     @PostMapping("/login")
@@ -54,32 +39,6 @@ public class AuthController {
             @Valid @RequestBody LoginRequest request
     ) {
 
-        User user = userRepository.findByUsername(
-                        request.getUsername()
-                )
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Invalid username/password"
-                        )
-                );
-
-        boolean passwordMatches =
-                passwordEncoder.matches(
-                        request.getPassword(),
-                        user.getPassword()
-                );
-
-        if (!passwordMatches) {
-            throw new RuntimeException(
-                    "Invalid username/password"
-            );
-        }
-
-        String token =
-                jwtUtil.generateToken(
-                        user.getUsername()
-                );
-
-        return new LoginResponse(token);
+        return authService.login(request);
     }
 }

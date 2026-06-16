@@ -24,7 +24,8 @@ async function loadFlower() {
 
   try {
     const res = await fetch(`/api/flowers/${flowerId}`);
-    const f = await res.json();
+    const response = await res.json();
+    const f = response.data;
 
     document.title = `${safe(f.name, "Flower")} - Details`;
 
