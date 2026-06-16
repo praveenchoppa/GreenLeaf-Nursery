@@ -1,119 +1,213 @@
-# Nursery Management System
+# 🌿 GreenLeaf Nursery Management System
 
-A full-stack Nursery Management Web Application built using Spring Boot, MySQL, HTML, CSS, and JavaScript. The project provides an admin dashboard for managing nursery products and categories with secure backend architecture, REST APIs, and Cloudinary image upload integration.
+A full-stack Nursery Management Web Application built using Spring Boot, MySQL, HTML, CSS, and JavaScript.
 
----
-
-## Features
-
-- Admin dashboard for nursery management
-- Product and category CRUD operations
-- RESTful API development using Spring Boot
-- Image upload and management using Cloudinary
-- Responsive frontend UI
-- Structured layered backend architecture
-- MySQL database integration
-- Exception handling for clean API responses
+The application allows administrators to manage flower categories, flowers, images, and users through a secure dashboard while providing a responsive public-facing nursery showcase website for customers.
 
 ---
 
-## Tech Stack
+## ✨ Features
+
+### Public Website
+
+* Browse flower categories
+* View flower details
+* Search categories
+* Responsive design for desktop and mobile
+* Contact and WhatsApp integration
+
+### User Features
+
+* User Registration
+* User Login
+* JWT Authentication
+* Profile Management
+* Role-Based Authorization
+
+### Admin Features
+
+* Secure Admin Login
+* Category CRUD Operations
+* Flower CRUD Operations
+* Cloudinary Image Upload
+* Dashboard Management
+* User Access Control
+
+### Backend Features
+
+* RESTful APIs
+* Spring Security Integration
+* JWT Authentication & Authorization
+* Global Exception Handling
+* DTO & Mapper Pattern
+* Layered Architecture
+* MySQL Database Integration
+
+---
+
+## 🛠 Tech Stack
 
 ### Backend
-- Java
-- Spring Boot
-- Spring Data JPA
-- Hibernate
+
+* Java
+* Spring Boot
+* Spring Security
+* Spring Data JPA
+* Hibernate
+* JWT Authentication
 
 ### Frontend
-- HTML
-- CSS
-- JavaScript
+
+* HTML5
+* CSS3
+* JavaScript
 
 ### Database
-- MySQL
+
+* MySQL
 
 ### Tools & Services
-- Cloudinary
-- Maven
-- Git
-- Postman
+
+* Cloudinary
+* Maven
+* Git
+* GitHub
+* Postman
 
 ---
 
-## Project Structure
+## 🔐 Authentication
 
-```bash
-src/main/java/com/nursery
-│
-├── controller
-├── service
-├── repository
-├── dto
-├── entity
-├── exception
-├── security
-└── config
-```
+The system uses JWT-based authentication.
+
+### Roles
+
+#### ROLE_ADMIN
+
+* Access Admin Dashboard
+* Manage Categories
+* Manage Flowers
+* Upload Images
+* Perform CRUD Operations
+
+#### ROLE_USER
+
+* Register Account
+* Login
+* View Profile
+* Access Public Website
 
 ---
 
-## Getting Started
+##  Getting Started
 
 ### Prerequisites
 
-- Java 17+
-- Maven
-- MySQL
+* Java 17+
+* Maven
+* MySQL
+* Cloudinary Account
 
 ---
 
-## Clone Repository
+### Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/nursery-management-system.git
-cd nursery-management-system
+git clone https://github.com/praveenchoppa/GreenLeaf-Nursery.git
+cd GreenLeaf-Nursery
 ```
 
 ---
 
-## Configure Database
+### Configure Environment Variables
 
-Update the `application.properties` file:
+Create the following environment variables:
 
 ```properties
-spring.datasource.url=YOUR_DB_URL
-spring.datasource.username=YOUR_DB_USERNAME
-spring.datasource.password=YOUR_DB_PASSWORD
+DB_URL=YOUR_DB_URL
+DB_USERNAME=YOUR_DB_USERNAME
+DB_PASSWORD=YOUR_DB_PASSWORD
 
-cloudinary.cloud-name=YOUR_CLOUD_NAME
-cloudinary.api-key=YOUR_API_KEY
-cloudinary.api-secret=YOUR_API_SECRET
+CLOUDINARY_CLOUD_NAME=YOUR_CLOUD_NAME
+CLOUDINARY_API_KEY=YOUR_API_KEY
+CLOUDINARY_API_SECRET=YOUR_API_SECRET
+
+JWT_SECRET=YOUR_JWT_SECRET
 ```
 
 ---
 
-## Run the Application
+### Run Application
 
 ```bash
 mvn spring-boot:run
 ```
 
+Application runs at:
+
+```text
+http://localhost:8080
+```
+
 ---
 
-## Features
+## 📸 Image Upload
 
-- Admin dashboard for nursery management
-- Product and category CRUD operations
-- RESTful API development using Spring Boot
-- JWT-based authentication and authorization
-- Secure role-based access control
-- Image upload and management using Cloudinary
-- Responsive frontend UI
-- Structured layered backend architecture
-- MySQL database integration
-- Exception handling for clean API responses
+Flower images are uploaded using Cloudinary and stored as secure URLs inside the database.
 
-## Author
+---
 
-Choppa Praveen Nooka Vinay Kumar
+## 📡 API Highlights
+
+### Authentication
+
+```text
+POST /api/auth/register
+POST /api/auth/login
+POST /api/auth/create-admin
+```
+
+### Categories
+
+```text
+GET    /api/categories
+POST   /api/admin/categories
+DELETE /api/admin/categories/{id}
+```
+
+### Flowers
+
+```text
+GET    /api/flowers
+GET    /api/flowers/{id}
+POST   /api/admin/flowers
+PUT    /api/admin/flowers/{id}
+DELETE /api/admin/flowers/{id}
+```
+
+### User
+
+```text
+GET /api/users/me
+```
+
+---
+
+## 🎯 Future Enhancements
+
+* Forgot Password
+* Email Verification
+* Order Management
+* Shopping Cart
+* Online Payments
+* Inventory Tracking
+* Deployment to Cloud
+
+---
+
+##  Author
+
+**Choppa Praveen Nooka Vinay Kumar**
+
+GitHub:
+https://github.com/praveenchoppa
