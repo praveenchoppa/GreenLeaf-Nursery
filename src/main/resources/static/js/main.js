@@ -11,9 +11,23 @@ function renderCategories(list) {
   categoriesGrid.innerHTML = "";
 
   if (!list || list.length === 0) {
-    emptyState.classList.remove("hidden");
+
+    emptyState.innerHTML = `
+        <div class="empty-icon">🌱</div>
+        <div class="empty-title">
+            No Categories Available
+        </div>
+        <div class="empty-sub">
+            Categories will appear here soon.
+        </div>
+    `;
+
+    emptyState.classList.remove(
+        "hidden"
+    );
+
     return;
-  }
+}
 
   emptyState.classList.add("hidden");
 

@@ -1,3 +1,18 @@
+const token =
+    localStorage.getItem("token");
+
+const role =
+    localStorage.getItem("role");
+
+if (
+    !token ||
+    role !== "ROLE_ADMIN"
+) {
+
+    window.location.href =
+        "/login.html";
+}
+
 function getToken() {
   return localStorage.getItem("token");
 }

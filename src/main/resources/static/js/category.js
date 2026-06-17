@@ -18,9 +18,21 @@ function safeText(v) {
 }
 
 function renderFlowers(list) {
+
   flowersGrid.innerHTML = "";
 
   if (!list || list.length === 0) {
+
+    flowerEmpty.innerHTML = `
+      <div class="empty-icon">🌸</div>
+      <div class="empty-title">
+        No Flowers Available
+      </div>
+      <div class="empty-sub">
+        Flowers will be added soon.
+      </div>
+    `;
+
     flowerEmpty.classList.remove("hidden");
     return;
   }
@@ -28,26 +40,53 @@ function renderFlowers(list) {
   flowerEmpty.classList.add("hidden");
 
   list.forEach(f => {
+
     const card = document.createElement("div");
     card.className = "card";
 
     card.innerHTML = `
-      <img class="flower-img" src="${safeText(f.imageUrl)}" alt="${safeText(f.name)}" />
+      <img
+        class="flower-img"
+        src="${safeText(f.imageUrl)}"
+        alt="${safeText(f.name)}"
+      />
+
       <div class="card-body">
-        <div class="card-title">${safeText(f.name)}</div>
-        <p class="card-sub">${safeText(f.description)}</p>
+
+        <div class="card-title">
+          ${safeText(f.name)}
+        </div>
+
+        <p class="card-sub">
+          ${safeText(f.description)}
+        </p>
 
         <div class="flower-meta">
-          <span class="badge">₹ ${safeText(f.price)}</span>
-          <span class="badge">🪴 ${safeText(f.potSize)}</span>
-          <span class="badge">⚖️ ${safeText(f.weight)} kg</span>
+          <span class="badge">
+            ₹ ${safeText(f.price)}
+          </span>
+
+          <span class="badge">
+            🪴 ${safeText(f.potSize)}
+          </span>
+
+          <span class="badge">
+            ⚖️ ${safeText(f.weight)} kg
+          </span>
         </div>
+
       </div>
     `;
 
     card.onclick = () => {
-      const back = encodeURIComponent(window.location.href);
-      window.location.href = `flower.html?id=${f.id}&back=${back}`;
+
+      const back =
+        encodeURIComponent(
+          window.location.href
+        );
+
+      window.location.href =
+        `flower.html?id=${f.id}&back=${back}`;
     };
 
     flowersGrid.appendChild(card);
@@ -55,23 +94,50 @@ function renderFlowers(list) {
 }
 
 async function loadFlowers() {
+
   const id = getParam("id");
   const name = getParam("name") || "Category";
 
   catTitle.innerText = `🌼 ${name}`;
   catHint.innerText = `Loading flowers in ${name}...`;
 
+  flowersGrid.innerHTML = `
+    <div class="empty-state">
+      <div class="empty-icon">⏳</div>
+      <div class="empty-title">
+        Loading Flowers...
+      </div>
+    </div>
+  `;
+
   try {
-    const res = await fetch(`/api/flowers?categoryId=${id}`);
-    const response = await res.json();
 
-    flowers = response.data.content;
+    const res =
+      await fetch(
+        `/api/flowers?categoryId=${id}`
+      );
 
-    catHint.innerText = `Found ${flowers.length} flower(s) in ${name}`;
+    const response =
+      await res.json();
+
+    flowers =
+      response.data.content;
+
+    catHint.innerText =
+      `Found ${flowers.length} flower(s) in ${name}`;
+
     renderFlowers(flowers);
+
   } catch (e) {
-    console.log("Error loading flowers", e);
-    catHint.innerText = `Could not load flowers.`;
+
+    console.log(
+      "Error loading flowers",
+      e
+    );
+
+    catHint.innerText =
+      "Could not load flowers.";
+
     renderFlowers([]);
   }
 }
